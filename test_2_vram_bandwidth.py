@@ -1,3 +1,4 @@
+""" Measures HBM/GDDR6 read and write speeds. Critical for identifying fake hardware or virtualization/PCIE lane restrictions."""
 import time
 import torch
 import yaml
