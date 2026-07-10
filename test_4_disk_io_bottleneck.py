@@ -1,3 +1,4 @@
+""" Tests disk read/write throughput. If a provider has slow storage attached, your expensive GPUs will sit idle waiting for training data to load. """
 import os
 import time
 import yaml
