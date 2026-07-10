@@ -1,3 +1,4 @@
+""" Simulates torch.distributed NCCL (NVIDIA Collective Communications Library) collectives. If you are training across multiple nodes, the network card (InfiniBand/RoCE) speed is everything. This tests backend synchronization speed. """
 import time
 import torch
 import torch.distributed as dist
