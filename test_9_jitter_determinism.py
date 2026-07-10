@@ -1,3 +1,4 @@
+""" Runs identical GEMM workloads multiple times and looks at variance. In poor cloud providers, another user on the same physical host will steal cycles, causing wild swings in your performance (compute jitter). """
 import time
 import numpy as np
 import torch
