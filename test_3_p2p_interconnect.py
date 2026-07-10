@@ -1,3 +1,4 @@
+""" Validates the interconnect fabric (NVLink vs. PCIe Gen4/5) between multiple local GPUs. Vital for multi-node/distributed training infrastructure. """
 import time
 import torch
 
