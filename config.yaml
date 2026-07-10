@@ -1,0 +1,4 @@
+# Configuration for the infrastructure stress test
+matrix_size: 16384         # Size of matrix for FLOPs and VRAM testing
+burn_in_duration_sec: 60   # Duration to loop execution for thermal/throttling test (set to 300+ for production)
+storage_test_file_gb: 5    # Size of dummy file to test network storage / 
