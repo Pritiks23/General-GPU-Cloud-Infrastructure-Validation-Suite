@@ -1,3 +1,4 @@
+""" Runs all validation components sequentially and builds a standardized terminal-ready infrastructure report table."""
 import torch
 from tabulate import tabulate
 
