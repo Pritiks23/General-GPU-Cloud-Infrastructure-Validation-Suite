@@ -1,3 +1,4 @@
+""" Loops heavy GEMM operations over an extended timeframe. Captures hardware degradation, bad cooling solutions, or unstable power limits. """
 import time
 import torch
 import yaml
