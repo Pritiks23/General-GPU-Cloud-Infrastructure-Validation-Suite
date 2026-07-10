@@ -1,3 +1,4 @@
+""" Measures PCIe bus throughput. If an infrastructure provider limits your PCIe lanes (e.g., giving you PCIe x4 instead of x16 via virtualization), moving model weights from system RAM to GPU VRAM will crawl, stalling your pipeline."""
 import time
 import torch
 
