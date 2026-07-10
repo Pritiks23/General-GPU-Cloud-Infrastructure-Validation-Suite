@@ -2,19 +2,40 @@
 
 # General GPU Cloud Infrastructure Validation Suite
 
-A standard, pythonic testing harness designed to comprehensively profile, audit, and baseline third-party bare-metal or virtualized GPU cloud infrastructure providers (e.g., AWS, CoreWeave, Lambda Labs, RunPod).
+A standardized, bare-metal and virtualized hardware validation harness built in Python. This suite is designed for ML Platform, MLOps, and Core Infrastructure teams to benchmark, profile, and stress-test third-party GPU cloud providers (e.g., AWS, CoreWeave, Lambda Labs, RunPod).
 
-Instead of measuring framework optimizations, this utility checks raw hardware constraints to identify hardware faults, virtualization scaling degradation, memory bottlenecks, and thermal profiling limitations.
+Instead of evaluating high-level framework abstractions, this tool probes deep-layer hardware constraints to expose virtualization overhead, noisy neighbor multi-tenancy, interconnect limits, thermal throttling, and I/O bottlenecks.
 
-## Key Infrastructure Benchmarks
-1. **Raw Compute FLOPs**: Executes heavy half-precision GEMM cycles to verify matrix tensor engines are hitting advertised spec caps.
-2. **Memory Bus Width**: Gauges bidirectional VRAM allocations to expose multi-tenant hardware performance leaking.
-3. **Peer-to-Peer Interconnect**: Verifies NVLink mesh matrix speed lanes inside scalable multi-GPU cluster configurations.
-4. **Data Stream Disk I/O**: Isolates storage storage attached networks (SAN) or local NVMe array lag spikes that stall raw GPU pipeline loading.
-5. **Thermal Endurance Burn-In**: Continuous stress loop targeting heat decay and clock speed degradation over elongated jobs.
+## Architectural Testing Pillars
 
-## Installation & Execution
+### 1. Compute & VRAM Integrity
+* **Test 1: Compute FLOPs:** Executes heavy half-precision General Matrix Multiplication (GEMM) to verify Tensor Core utilization and clock speed validation.
+* **Test 2: VRAM Memory Bandwidth:** Evaluates HBM/GDDR6 read/write efficiency to ensure data buses are running at full width.
+* **Test 5: Thermal Endurance Burn-In:** Loops compute loads continuously over extended timeframes to catch heat decay and power limit degradation.
+
+### 2. Fabric & Bus Topology
+* **Test 3: Peer-to-Peer Interconnect:** Profiles multi-GPU communication matrices to measure local NVLink vs. bottlenecked PCIe Gen4/5 scaling profiles.
+* **Test 6: PCIe Bus Bandwidth:** Measures Host-to-Device (H2D) and Device-to-Host (D2H) memory page transfers via pinned system RAM.
+* **Test 7: Distributed NCCL Collective Simulation:** Simulates `torch.distributed` all-reduce clusters to analyze networking card fabric sync overhead.
+
+### 3. Virtualization, Kernel, & I/O Isolation
+* **Test 4: Data Stream Disk I/O:** Measures sequential read/write pipelines to isolate storage network (SAN) lag spikes that starve the GPU.
+* **Test 8: Quantization Core Paths:** Verifies hardware register support for modern sub-byte numeric spaces (Native FP8/INT8 matrix layouts).
+* **Test 9: Compute Jitter Variance:** Assesses latency percentiles ($P_{50}$ vs. $P_{99}$ tails) to capture multi-tenant noisy neighbor cloud interference.
+* **Test 10: Context Allocation Integrity:** Validates CUDA Context garbage collection across streams to detect asynchronous virtualization engine memory leaks.
+
+## Production-Ready Error Handling
+All scripts use decoupled hardware checks and safe environment fallbacks. If run inside a CPU environment like GitHub Codespaces, tests gracefully log a `SKIPPED` warning matrix rather than throwing unhandled exceptions. Storage components utilize strict `try...finally` teardowns to completely prevent dead storage leaks on host volumes.
+
+## Getting Started
+
+### Prerequisites & Dependencies
 ```bash
 pip install -r requirements.txt
+```
+
+### Execution Loop
+```bash
 python run_suite.py
 ```
+
