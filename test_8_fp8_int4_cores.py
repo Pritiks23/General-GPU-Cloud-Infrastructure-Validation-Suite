@@ -1,3 +1,4 @@
+""" Validates the GPU's modern matrix architectures (Tensor Cores on Hopper/Ada Lovelace architectures supporting native FP8/INT4 quantization). This checks if the provider gave you older hardware masquerading as newer architectures. """
 import torch
 
 def run_quantization_hardware_test():
