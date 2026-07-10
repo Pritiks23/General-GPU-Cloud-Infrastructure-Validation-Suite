@@ -1,3 +1,4 @@
+""" Tests raw FP16/BF16 matrix multiplication (GEMM) performance to verify if the provider is throttling the GPU clock speeds. """
 import time
 import torch
 import yaml
