@@ -1,4 +1,5 @@
-blob:https://mail.google.com/8809992d-fe45-4cbb-94c0-a4f4313f8db8
+<img width="2802" height="1756" alt="image" src="https://github.com/user-attachments/assets/776653a2-8889-40d5-99d4-fbf62027ca3b" />
+
 # General GPU Cloud Infrastructure Validation Suite
 
 A standard, pythonic testing harness designed to comprehensively profile, audit, and baseline third-party bare-metal or virtualized GPU cloud infrastructure providers (e.g., AWS, CoreWeave, Lambda Labs, RunPod).
