@@ -1,3 +1,4 @@
+""" Validates CUDA Context garbage collection efficiency. If an infrastructure provider uses low-grade virtualization software or outdated virtualization kernels, GPU memory references leak across contexts during heavy asynchronous teardowns. """
 import torch
 
 def run_context_leak_test():
