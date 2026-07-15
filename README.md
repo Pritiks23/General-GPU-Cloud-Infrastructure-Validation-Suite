@@ -142,6 +142,51 @@ GPU RUNTIME VALIDATION RESULTS
 └─────────────────────────────┴──────────────────────┴────────────────────┘
 ```
 
+## Performance Interpretation
+
+```text
+================================================================================
+                           PERFORMANCE INTERPRETATION
+================================================================================
+
+🟢 Green Flags (Healthy Performance)
+
+Compute FLOPs          : > 90% of theoretical peak
+VRAM Bandwidth         : > 90% of HBM specification
+Stream Efficiency      : > 90%
+Measured Occupancy     : > 85%
+Cache Efficiency       : > 90%
+H2D Bandwidth          : > 20 GB/s (PCIe 3.0)
+Thermal Stability      : < 5% clock variance
+Jitter (P99)           : < 10 ms
+
+
+🟡 Yellow Flags (Needs Attention)
+
+Compute FLOPs          : 70–90% of theoretical peak
+VRAM Bandwidth         : 70–90% of HBM specification
+Stream Efficiency      : 70–90%
+Measured Occupancy     : 60–85%
+Cache Efficiency       : 70–90%
+H2D Bandwidth          : 5–20 GB/s
+Thermal Stability      : 5–15% clock variance
+Jitter (P99)           : 10–50 ms
+
+
+🔴 Red Flags (Critical Issues)
+
+Compute FLOPs          : < 70% of theoretical peak
+VRAM Bandwidth         : < 70% of HBM specification
+Stream Efficiency      : < 70%
+Measured Occupancy     : < 50%
+Cache Efficiency       : < 60%
+H2D Bandwidth          : < 5 GB/s
+Thermal Stability      : > 15% clock variance
+Jitter (P99)           : > 100 ms
+Divergence Penalty     : > 40%
+Context Leaks          : Detected
+```
+
 ## Getting Started
 
 ### Prerequisites & Dependencies
