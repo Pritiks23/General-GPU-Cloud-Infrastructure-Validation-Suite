@@ -6,7 +6,7 @@ A standardized, bare-metal and virtualized hardware validation harness built in 
 
 Instead of evaluating high-level framework abstractions, this tool probes deep-layer hardware constraints to expose virtualization overhead, noisy neighbor multi-tenancy, interconnect limits, thermal throttling, and I/O bottlenecks.
 
-## Architectural Testing Pillars
+## Architectural Testing Pillars Phase 1: Infrastructure Layer Testing
 
 ### 1. Compute & VRAM Integrity
 * **Test 1: Compute FLOPs:** Executes heavy half-precision General Matrix Multiplication (GEMM) to verify Tensor Core utilization and clock speed validation.
@@ -24,8 +24,90 @@ Instead of evaluating high-level framework abstractions, this tool probes deep-l
 * **Test 9: Compute Jitter Variance:** Assesses latency percentiles ($P_{50}$ vs. $P_{99}$ tails) to capture multi-tenant noisy neighbor cloud interference.
 * **Test 10: Context Allocation Integrity:** Validates CUDA Context garbage collection across streams to detect asynchronous virtualization engine memory leaks.
 
+### Phase 2: GPU Runtime Optimization Testing
+Testing Focus: Deep-layer CUDA execution model, memory hierarchy optimization, and hardware utilization profiling. These tests measure kernel-level performance characteristics and GPU subsystem efficiency.
+* **Test 1: CUDA Streams
+Concurrent stream execution efficiency and synchronization overhead
+Measures: Stream efficiency (%), Concurrent operations/sec, Synchronization latency
+File: cuda_streams.py
+Insight: Identifies parallel execution bottlenecks and stream scheduling overhead
+
+
+* **Test 2: CUDA Graphs
+Kernel launch graph optimization and launch overhead reduction
+Measures: Launch overhead reduction (%), Speedup factor, Graph compilation overhead
+File: cuda_graphs.py
+Insight: Quantifies benefit of batched kernel execution vs. individual launches
+
+
+* **Test 3: Occupancy
+Streaming Multiprocessor (SM) occupancy and warp scheduling efficiency
+Measures: SM count, Warp occupancy (%), Grid utilization (%), Measured SM usage
+File: occupancy.py
+Insight: Identifies resource underutilization and block size inefficiencies
+
+
+* **Test 4: Kernel Launch
+
+Kernel dispatch overhead and scheduling efficiency
+Measures: Launch overhead (µs), Maximum launch rate (kernels/sec), Grid/block impact
+File: kernel_launch.py
+Insight: Exposes host-side bottlenecks in kernel queue submission
+
+
+## Memory Hierarchy Optimization
+* ** Test 5: Shared Memory
+L1/L2 cache efficiency, memory coalescing, and memory access patterns
+Measures: Cache efficiency (%), Coalescing efficiency (%), Bandwidth patterns
+File: shared_memory.py
+Insight: Reveals cache line misses and uncoalesced memory access penalties
+
+
+* ** Test 6: Async Memcpy Overlap
+PCIe bandwidth measurement and compute-copy overlap efficiency
+Measures: H2D bandwidth (GB/s), D2H bandwidth (GB/s), Overlap efficiency (%)
+File: async_memcpy_overlap.py
+Insight: Quantifies PCIe generation capabilities and data movement bottlenecks
+
+
+## Compute Acceleration
+* **Test 7: Tensor Core Efficiency
+Mixed-precision acceleration (FP32 vs BF16/FP16) and GEMM performance
+Measures: TFLOPS achieved, Speedup factor, Tensor Core utilization (%)
+File: tensor_core_efficiency.py
+Requires: Compute Capability >= 7.0 (Volta or newer)
+Insight: Validates Tensor Core activation and mixed-precision benefits
+
+
+## Control Flow & Synchronization
+* **Test 8: Warp Divergence
+Branch divergence penalties and control flow efficiency
+Measures: Divergence penalty (%), Warp efficiency loss (%), Branch complexity impact
+File: warp_divergence.py
+Insight: Identifies conditional branches that serialize warp execution
+
+
+* ** Test 9: Unified Memory Migration
+
+UVA page migration overhead and page fault costs
+Measures: Migration penalty (%), Page fault cost (µs), Thrashing penalty (%)
+File: unified_memory_migration.py
+Insight: Measures cost of automatic memory migration and page fault handling
+
+
+* ** Test 10: Cooperative Groups
+Thread block synchronization costs and collective operation overhead
+Measures: Barrier cost (µs), Collective operation overhead, Cross-lane communication
+File: cooperative_groups.py
+Insight: Quantifies synchronization barriers and thread communication efficiency
+
+
 ## Production-Ready Error Handling
-All scripts use decoupled hardware checks and safe environment fallbacks. If run inside a CPU environment like GitHub Codespaces, tests gracefully log a `SKIPPED` warning matrix rather than throwing unhandled exceptions. Storage components utilize strict `try...finally` teardowns to completely prevent dead storage leaks on host volumes.
+All scripts use decoupled hardware checks and safe environment fallbacks:
+GPU Availability: If CUDA is not available, tests gracefully log a SKIPPED status rather than throwing unhandled exceptions
+Compute Capability Checks: Tests automatically skip features not supported by the GPU architecture (e.g., Tensor Cores require CC >= 7.0)
+Storage Teardown: Storage components utilize strict try...finally teardowns to completely prevent dead storage leaks on host volumes
+Memory Cleanup: All GPU memory allocations are explicitly freed, with fallback CPU emulation for non-GPU environments
 
 ## Getting Started
 
@@ -37,5 +119,8 @@ pip install -r requirements.txt
 ### Execution Loop
 ```bash
 python run_suite.py
+
+Phase 2: GPU Runtime optimization
+python GPURuntimeValidation/run_gpu_validation_suite.py
 ```
 
