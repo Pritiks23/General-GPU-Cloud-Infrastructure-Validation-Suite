@@ -110,11 +110,11 @@ Storage Teardown: Storage components utilize strict try...finally teardowns to c
 Memory Cleanup: All GPU memory allocations are explicitly freed, with fallback CPU emulation for non-GPU environments
 
 
-Output Format
-
+```text
 ================================================================================
          PRODUCTION-GRADE HARDWARE CLOUD VALIDATION MATRIX
 ================================================================================
+
 Target Environment : Enterprise GPU Cluster Node
 Hardware Resources : 1x NVIDIA A100-PCIE-40GB
 CUDA Version       : 12.1
@@ -124,22 +124,23 @@ SM Count           : 108
 ┌─────────────────────────────┬──────────────────────┬────────────────────┐
 │ Infrastructure Pillar       │ Metric Audited       │ Observed Value     │
 ├─────────────────────────────┼──────────────────────┼────────────────────┤
-│  1. Compute FLOPs           │ Peak TFLOPS          │ 312.45             │
-│  2. VRAM Bandwidth          │ Memory Throughput    │ 1935.2 GB/s        │
-│  3. P2P Interconnect        │ NVLink Bandwidth     │ 900.0 GB/s         │
-│  ...                        │ ...                  │ ...                │
+│ 1. Compute FLOPs            │ Peak TFLOPS          │ 312.45             │
+│ 2. VRAM Bandwidth           │ Memory Throughput    │ 1935.2 GB/s        │
+│ 3. P2P Interconnect         │ NVLink Bandwidth     │ 900.0 GB/s         │
+│ ...                         │ ...                  │ ...                │
 └─────────────────────────────┴──────────────────────┴────────────────────┘
 
-GPU RUNTIME VALIDATION RESULTS:
+GPU RUNTIME VALIDATION RESULTS
 
 ┌─────────────────────────────┬──────────────────────┬────────────────────┐
 │ GPU Subsystem               │ Performance Metric   │ Measured Value     │
 ├─────────────────────────────┼──────────────────────┼────────────────────┤
-│  1. CUDA Streams            │ Stream Efficiency    │ 98.45%             │
-│  2. CUDA Graphs             │ Overhead Reduction   │ 23.15%             │
-│  3. Occupancy               │ Measured Util        │ 95.2%              │
-│  ...                        │ ...                  │ ...                │
+│ 1. CUDA Streams             │ Stream Efficiency    │ 98.45%             │
+│ 2. CUDA Graphs              │ Overhead Reduction   │ 23.15%             │
+│ 3. Occupancy                │ Measured Util        │ 95.2%              │
+│ ...                         │ ...                  │ ...                │
 └─────────────────────────────┴──────────────────────┴────────────────────┘
+```
 
 ## Getting Started
 
