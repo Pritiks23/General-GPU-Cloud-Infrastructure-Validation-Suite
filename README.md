@@ -112,8 +112,6 @@ Memory Cleanup: All GPU memory allocations are explicitly freed, with fallback C
 
 Output Format
 
-Both suites produce standardized tabulated reports:
-
 ================================================================================
          PRODUCTION-GRADE HARDWARE CLOUD VALIDATION MATRIX
 ================================================================================
