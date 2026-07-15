@@ -120,7 +120,7 @@ pip install -r requirements.txt
 ```bash
 python run_suite.py
 
-Phase 2: GPU Runtime optimization
+## Phase 2: GPU Runtime optimization
 python GPURuntimeValidation/run_gpu_validation_suite.py
 ```
 
