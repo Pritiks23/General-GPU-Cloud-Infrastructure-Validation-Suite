@@ -109,7 +109,7 @@ Compute Capability Checks: Tests automatically skip features not supported by th
 Storage Teardown: Storage components utilize strict try...finally teardowns to completely prevent dead storage leaks on host volumes
 Memory Cleanup: All GPU memory allocations are explicitly freed, with fallback CPU emulation for non-GPU environments
 
-
+## Output Format
 ```text
 ================================================================================
          PRODUCTION-GRADE HARDWARE CLOUD VALIDATION MATRIX
